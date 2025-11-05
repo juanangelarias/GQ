@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="15.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.10" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.10" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GQ.Common\GQ.Common.csproj" />
+      <ProjectReference Include="..\GQ.Entities\GQ.Entities.csproj" />
+    </ItemGroup>
+
+</Project>

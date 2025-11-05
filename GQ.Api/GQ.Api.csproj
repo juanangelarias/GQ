@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="15.1.0" />
+        <PackageReference Include="AutoMapper.Collection" Version="11.0.0" />
+        <PackageReference Include="AutoMapper.Collection.EntityFrameworkCore" Version="11.0.0" />
+        <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.11" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Serilog" Version="4.3.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GQ.Database\GQ.Database.csproj" />
+      <ProjectReference Include="..\GQ.Repository\GQ.Repository.csproj" />
+    </ItemGroup>
+
+</Project>
