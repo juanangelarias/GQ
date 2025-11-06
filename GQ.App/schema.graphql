@@ -1,0 +1,203 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Query {
+  productTypes: [ProductType!]!
+  products("Returns the first _n_ elements from the list." first: Int "Returns the elements in the list that come after the specified cursor." after: String "Returns the last _n_ elements from the list." last: Int "Returns the elements in the list that come before the specified cursor." before: String where: ProductFilterInput order: [ProductSortInput!]): ProductsConnection
+  hello(who: String!): String!
+}
+
+type Mutation {
+  setProduct(id: Long! code: String! name: String! productTypeId: Long!): Product!
+  setProductPrice(productId: Long! price: Decimal!): ProductPrice!
+}
+
+type Subscription {
+  onProductChanged: Product!
+}
+
+input ProductFilterInput {
+  and: [ProductFilterInput!]
+  or: [ProductFilterInput!]
+  code: StringOperationFilterInput
+  name: StringOperationFilterInput
+  productTypeId: LongOperationFilterInput
+  productType: ProductTypeFilterInput
+  prices: ListFilterInputTypeOfProductPriceFilterInput
+  id: LongOperationFilterInput
+}
+
+input ProductSortInput {
+  code: SortEnumType
+  name: SortEnumType
+  productTypeId: SortEnumType
+  productType: ProductTypeSortInput
+  id: SortEnumType
+}
+
+"A connection to a list of items."
+type ProductsConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [ProductsEdge!]
+  "A flattened list of the nodes."
+  nodes: [Product!]
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input LongOperationFilterInput {
+  eq: Long
+  neq: Long
+  in: [Long]
+  nin: [Long]
+  gt: Long
+  ngt: Long
+  gte: Long
+  ngte: Long
+  lt: Long
+  nlt: Long
+  lte: Long
+  nlte: Long
+}
+
+input ProductTypeFilterInput {
+  and: [ProductTypeFilterInput!]
+  or: [ProductTypeFilterInput!]
+  code: StringOperationFilterInput
+  name: StringOperationFilterInput
+  id: LongOperationFilterInput
+}
+
+input ListFilterInputTypeOfProductPriceFilterInput {
+  all: ProductPriceFilterInput
+  none: ProductPriceFilterInput
+  some: ProductPriceFilterInput
+  any: Boolean
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+input ProductTypeSortInput {
+  code: SortEnumType
+  name: SortEnumType
+  id: SortEnumType
+}
+
+"Information about pagination in a connection."
+type PageInfo {
+  "Indicates whether more edges exist following the set defined by the clients arguments."
+  hasNextPage: Boolean!
+  "Indicates whether more edges exist prior the set defined by the clients arguments."
+  hasPreviousPage: Boolean!
+  "When paginating backwards, the cursor to continue."
+  startCursor: String
+  "When paginating forwards, the cursor to continue."
+  endCursor: String
+}
+
+"An edge in a connection."
+type ProductsEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Product!
+}
+
+"The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+scalar Long
+
+input ProductPriceFilterInput {
+  and: [ProductPriceFilterInput!]
+  or: [ProductPriceFilterInput!]
+  productId: LongOperationFilterInput
+  date: DateTimeOperationFilterInput
+  price: DecimalOperationFilterInput
+  product: ProductFilterInput
+  id: LongOperationFilterInput
+}
+
+input DateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+input DecimalOperationFilterInput {
+  eq: Decimal
+  neq: Decimal
+  in: [Decimal]
+  nin: [Decimal]
+  gt: Decimal
+  ngt: Decimal
+  gte: Decimal
+  ngte: Decimal
+  lt: Decimal
+  nlt: Decimal
+  lte: Decimal
+  nlte: Decimal
+}
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
+
+"The `Decimal` scalar type represents a decimal floating-point number."
+scalar Decimal
+
+type ProductPrice {
+  productId: Long!
+  date: DateTime!
+  price: Decimal!
+  product: Product!
+  id: Long!
+}
+
+type Product {
+  code: String!
+  name: String!
+  productTypeId: Long!
+  productType: ProductType!
+  prices: [ProductPrice!]!
+  id: Long!
+}
+
+type ProductType {
+  code: String!
+  name: String!
+  id: Long!
+}
+
+"The purpose of the `cost` directive is to define a `weight` for GraphQL types, fields, and arguments. Static analysis can use these weights when calculating the overall cost of a query or response."
+directive @cost("The `weight` argument defines what value to add to the overall cost for every appearance, or possible appearance, of a type, field, argument, etc." weight: String!) on SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM | INPUT_FIELD_DEFINITION
+
+"The purpose of the `@listSize` directive is to either inform the static analysis about the size of returned lists (if that information is statically available), or to point the analysis to where to find that information."
+directive @listSize("The `assumedSize` argument can be used to statically define the maximum length of a list returned by a field." assumedSize: Int "The `slicingArguments` argument can be used to define which of the field's arguments with numeric type are slicing arguments, so that their value determines the size of the list returned by that field. It may specify a list of multiple slicing arguments." slicingArguments: [String!] "The `slicingArgumentDefaultValue` argument can be used to define a default value for a slicing argument, which is used if the argument is not present in a query." slicingArgumentDefaultValue: Int "The `sizedFields` argument can be used to define that the value of the `assumedSize` argument or of a slicing argument does not affect the size of a list returned by a field itself, but that of a list returned by one of its sub-fields." sizedFields: [String!] "The `requireOneSlicingArgument` argument can be used to inform the static analysis that it should expect that exactly one of the defined slicing arguments is present in a query. If that is not the case (i.e., if none or multiple slicing arguments are present), the static analysis may throw an error." requireOneSlicingArgument: Boolean! = true) on FIELD_DEFINITION

@@ -8,6 +8,7 @@ public class DataContext(DbContextOptions<DataContext> options): DbContext(optio
 {
     // P
     public DbSet<Product> Products { get; set; }
+    public DbSet<ProductPrice> ProductPrices { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }
     
     // *** *** ***

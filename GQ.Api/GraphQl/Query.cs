@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using GQ.Common.Dto;
-using GQ.Database;
+﻿using GQ.Database;
 using GQ.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GQ.Common", "GQ.Common\GQ.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GQ.Database", "GQ.Database\GQ.Database.csproj", "{52CB40FE-8FCC-447F-8C59-4DD8502C93B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GQ.App", "GQ.App\GQ.App.csproj", "{FAEF4822-7DEA-4E74-B40D-6891481BD1CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{52CB40FE-8FCC-447F-8C59-4DD8502C93B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52CB40FE-8FCC-447F-8C59-4DD8502C93B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52CB40FE-8FCC-447F-8C59-4DD8502C93B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAEF4822-7DEA-4E74-B40D-6891481BD1CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAEF4822-7DEA-4E74-B40D-6891481BD1CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAEF4822-7DEA-4E74-B40D-6891481BD1CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAEF4822-7DEA-4E74-B40D-6891481BD1CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

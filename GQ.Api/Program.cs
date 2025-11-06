@@ -48,11 +48,14 @@ public class Program
         builder.Services
             .AddGraphQLServer()
             .AddQueryType<Query>()
+            .AddMutationType<Mutation>()
+            .AddSubscriptionType<Subscription>()
             .RegisterDbContextFactory<DataContext>()
             .AddFiltering()
             .AddSorting()
             .AddProjections()
-            .AddPagingArguments();
+            .AddPagingArguments()
+            .AddInMemorySubscriptions();
         
         //.AddMutationType<Mutation>();
 
@@ -64,7 +67,7 @@ public class Program
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
-
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -86,7 +89,8 @@ public class Program
         app.UseAuthorization();
 
         //app.MapControllers();
-        app.MapGraphQL("/graphql");
+        app.UseWebSockets();
+        app.MapGraphQL();
 
         Log.Information("GQ Proof of Concept - API v1 web host");
 
