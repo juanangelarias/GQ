@@ -4,7 +4,6 @@ using AutoMapper.EquivalencyExpression;
 using GQ.Api.GraphQl;
 using GQ.Database;
 using GQ.Database.Mappings;
-using GQ.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -30,10 +29,6 @@ public static class Services
             }, typeof(DataContext).Assembly);
         
         services.AddHttpContextAccessor();
-
-        services.AddGraphQLServer()
-            .AddQueryType<Query>();
-            //.AddMutationType<Mutation>();
 
         /*services.AddDbContext<DataContext>(opts => { opts.UseSqlServer(config.GetConnectionString("DataContext")); });*/
 
@@ -87,13 +82,6 @@ public static class Services
             am.UseEntityFrameworkCoreModel<DataContext>(sp);
             am.AddProfile<SqlMappingsProfile>();
         }, typeof(DataContext).Assembly);
-        
-        // Repositories
-        
-        services
-            .AddScoped<IProductRepository, ProductRepository>()
-            .AddScoped<IProductPriceRepository, ProductPriceRepository>()
-            .AddScoped<IProductTypeRepository, ProductTypeRepository>();
         
         #endregion
     }

@@ -1,4 +1,5 @@
 using System.Net;
+using GQ.Api.GraphQl;
 using GQ.Database;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +18,11 @@ public class Program
             .WriteTo.File(@"C:\Logs\GQ\API_Log.txt", rollingInterval: RollingInterval.Day)
             .WriteTo.Console()
             .CreateLogger();
-        
+
         var builder = WebApplication.CreateBuilder(args);
+
         builder.Host.UseSerilog();
-        
+
         builder.WebHost.ConfigureKestrel(so =>
         {
             so.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(2);
@@ -34,11 +36,26 @@ public class Program
                 listenOptions.UseHttps();
             });
         });
-        
-        builder.Services.AddDbContext<DataContext>(options =>
+
+        /*builder.Services.AddDbContext<DataContext>(options =>
             //options.UseSqlServer(builder.Configuration.GetConnectionString("BsgDbContext")));
-            options.UseSqlite(builder.Configuration.GetConnectionString("DataContext")));
+            options.UseSqlite(builder.Configuration.GetConnectionString("DataContext")));*/
+
+        builder.Services
+            .AddPooledDbContextFactory<DataContext>(o =>
+                o.UseSqlite(builder.Configuration.GetConnectionString("DataContext")));
         
+        builder.Services
+            .AddGraphQLServer()
+            .AddQueryType<Query>()
+            .RegisterDbContextFactory<DataContext>()
+            .AddFiltering()
+            .AddSorting()
+            .AddProjections()
+            .AddPagingArguments();
+        
+        //.AddMutationType<Mutation>();
+
         // Add services to the container.
         Services.ConfigureServices(builder);
 
@@ -49,7 +66,7 @@ public class Program
         builder.Services.AddOpenApi();
 
         var app = builder.Build();
-        
+
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -72,7 +89,7 @@ public class Program
         app.MapGraphQL("/graphql");
 
         Log.Information("GQ Proof of Concept - API v1 web host");
-        
+
         app.Run();
     }
 }

@@ -2,7 +2,6 @@
 using GQ.Common.Dto;
 using GQ.Database;
 using GQ.Entities;
-using GQ.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,11 +19,15 @@ public class Query()
     }
 
     // Product
-    public async Task<IEnumerable<Product>> GetProducts([FromServices] DataContext db)
+    [UsePaging]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]   
+    public async Task<IQueryable<Product>> GetProducts([FromServices] DataContext db)
     {
-        var data = await db.Products
+        var data = db.Products
             .Include(i=>i.ProductType)
-            .ToListAsync();
+            .AsQueryable();
 
         return data;
     }

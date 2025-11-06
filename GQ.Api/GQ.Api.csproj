@@ -11,6 +11,7 @@
         <PackageReference Include="AutoMapper.Collection" Version="11.0.0" />
         <PackageReference Include="AutoMapper.Collection.EntityFrameworkCore" Version="11.0.0" />
         <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.11" />
+        <PackageReference Include="HotChocolate.Data.EntityFramework" Version="15.1.11" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.10" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
@@ -26,7 +27,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\GQ.Database\GQ.Database.csproj" />
-      <ProjectReference Include="..\GQ.Repository\GQ.Repository.csproj" />
     </ItemGroup>
 
 </Project>

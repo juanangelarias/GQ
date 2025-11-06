@@ -65,7 +65,7 @@ public class DataContext(DbContextOptions<DataContext> options): DbContext(optio
             );
 
         
-        var userId = -1; // _userResolverService.GetUserId();
+        //var userId = -1; // _userResolverService.GetUserId();
 
         foreach (var entityEntry in entries)
         {
