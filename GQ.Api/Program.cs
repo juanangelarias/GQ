@@ -1,5 +1,8 @@
 using System.Net;
 using GQ.Api.GraphQl;
+using GQ.Api.GraphQl.Mutations;
+using GQ.Api.GraphQl.Queries;
+using GQ.Api.GraphQl.Subscriptions;
 using GQ.Database;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +51,7 @@ public class Program
         builder.Services
             .AddGraphQLServer()
             .AddQueryType<Query>()
-            .AddMutationType<Mutation>()
+            .AddMutationType<Mutations>()
             .AddSubscriptionType<Subscription>()
             .RegisterDbContextFactory<DataContext>()
             .AddFiltering()

@@ -1,6 +1,7 @@
-﻿using GQ.Entities;
+﻿using GQ.Api.GraphQl.Mutations;
+using GQ.Entities;
 
-namespace GQ.Api.GraphQl;
+namespace GQ.Api.GraphQl.Subscriptions;
 
 public class Subscription
 {

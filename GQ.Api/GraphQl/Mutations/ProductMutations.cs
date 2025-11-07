@@ -5,13 +5,12 @@ using HotChocolate.Subscriptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace GQ.Api.GraphQl;
+namespace GQ.Api.GraphQl.Mutations;
 
-public class Mutation
+public partial class Mutation
 {
     public async Task<Product> SetProduct(long id, string code, string name, long productTypeId,
-        [FromServices] DataContext db,
-        [Service] ITopicEventSender eventSender, CancellationToken cancellationToken)
+        [FromServices] DataContext db, [Service] ITopicEventSender eventSender, CancellationToken cancellationToken)
     {
         var product = new Product
         {
@@ -29,7 +28,7 @@ public class Mutation
         {
             var dbProduct = await db.Products
                 .FirstOrDefaultAsync(f => f.Id == product.Id, cancellationToken: cancellationToken);
-            
+
             if (dbProduct != null)
                 db.Products.Update(product);
             else
@@ -43,19 +42,17 @@ public class Mutation
         return product;
     }
 
-    public ProductPrice SetProductPrice(long productId, decimal price, [FromServices] DataContext db)
+    public async Task<bool> DeleteProduct(long id, [FromServices] DataContext db)
     {
-        var productPrice = new ProductPrice
-        {
-            Id = 0,
-            ProductId = productId,
-            Date = DateTime.Now,
-            Price = price
-        };
+        var product = await db.Products
+            .FirstOrDefaultAsync(f => f.Id == id);
 
-        db.ProductPrices.Add(productPrice);
-        db.SaveChanges();
+        if (product == null)
+            throw new NotFoundException("Product not found");
 
-        return productPrice;
+        db.Products.Remove(product);
+        await db.SaveChangesAsync();
+
+        return true;
     }
 }
